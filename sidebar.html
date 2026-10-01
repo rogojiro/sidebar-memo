@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { 
+      padding: 10px; 
+      font-family: sans-serif; 
+      background-color: #202124; 
+      color: #e8eaed; 
+      margin: 0;
+    }
+    
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+
+    h3 { margin: 0; color: #ffffff; font-size: 16px; }
+
+    .btn-group { display: flex; gap: 5px; }
+
+    button {
+      background-color: #5f6368; 
+      color: #ffffff;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+    
+    button:hover { background-color: #131416; }
+
+    /* 動的タブエリアのスタイル */
+    .tab-bar {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      margin-bottom: 8px;
+      overflow-x: auto; 
+    }
+
+    .tab-container {
+      display: flex;
+      gap: 3px;
+    }
+
+    .tab-button {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background-color: #3c4043;
+      color: #9aa0a6;
+      padding: 6px 10px; 
+      border-radius: 4px 4px 0 0;
+      font-size: 11px;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .tab-button.active {
+      background-color: #2d2d30;
+      color: #ffffff;
+      border-bottom: 2px solid #8ab4f8;
+    }
+
+    /* M0 専用のタブスタイル */
+    .tab-button.memo0-tab {
+      background-color: #2f3e46;
+      color: #cad2c5;
+    }
+    .tab-button.memo0-tab.active {
+      background-color: #2d2d30;
+      color: #8ab4f8;
+      border-bottom: 2px solid #8ab4f8;
+    }
+
+    /* 大きくて押しやすい「×」ボタン */
+    .close-tab {
+      background: none;
+      border: none;
+      color: #9aa0a6;
+      padding: 0;
+      font-size: 14px; 
+      font-weight: bold;
+      cursor: pointer;
+      width: 18px;    
+      height: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%; 
+      transition: background 0.2s, color 0.2s;
+    }
+    
+    .close-tab:hover { 
+      background-color: rgba(242, 139, 130, 0.2); 
+      color: #f28b82; 
+    }
+
+    /* タブを追加するプラスボタン */
+    #add-tab-button {
+      background-color: #3c4043;
+      color: #8ab4f8;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+    #add-tab-button:hover { background-color: #5f6368; }
+    
+    textarea, .preview-area { 
+      width: 100%; 
+      height: 78vh; 
+      box-sizing: border-box; 
+      padding: 12px; 
+      font-size: 16px; 
+      background-color: #2d2d30; 
+      color: #ffffff; 
+      border: 1px solid #3c3c3c; 
+      border-radius: 0 4px 4px 4px; 
+      resize: none; 
+      outline: none; 
+      line-height: 1.5;
+      overflow-y: auto;
+    }
+
+    textarea:disabled {
+      background-color: #252526;
+      color: #aaaaaa;
+      cursor: not-allowed;
+    }
+
+    .preview-area {
+      white-space: pre-wrap;
+      word-break: break-all;
+      display: none;
+    }
+
+    .preview-area a {
+      color: #8ab4f8;
+      text-decoration: underline;
+    }
+    .preview-area a:hover { color: #aecbfa; }
+
+    textarea::-webkit-scrollbar, .preview-area::-webkit-scrollbar { width: 8px; }
+    textarea::-webkit-scrollbar-track, .preview-area::-webkit-scrollbar-track { background: #2d2d30; }
+    textarea::-webkit-scrollbar-thumb, .preview-area::-webkit-scrollbar-thumb { background: #555; border-radius: 4px; }
+    .tab-bar::-webkit-scrollbar { height: 4px; }
+    .tab-bar::-webkit-scrollbar-thumb { background: #555; border-radius: 2px; }
+
+    .tab-button.dragging {
+      opacity: 0.4;
+      border: 2px dashed #8ab4f8;
+    }
+    
+    .tab-button.drag-over {
+      border-left: 4px solid #8ab4f8;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h3>my memo</h3>
+    <div class="btn-group">
+      <button id="toggle-button">URL</button>
+      <button id="clear-button">Del</button>
+    </div>
+  </div>
+
+  <div class="tab-bar">
+    <div id="memo0-tab" class="tab-button memo0-tab" data-index="0">M0</div>
+    <div id="tab-container" class="tab-container"></div>
+    <button id="add-tab-button">＋</button>
+  </div>
+
+  <textarea id="memo-area"></textarea>
+  <div id="preview-area" class="preview-area" contenteditable="true"></div>
+
+  <script src="sidebar.js"></script>
+
+</body>
+</html>
